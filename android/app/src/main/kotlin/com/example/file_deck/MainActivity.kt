@@ -6,11 +6,14 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.Settings
+import android.util.Log
 import android.widget.Toast
 import io.flutter.embedding.android.FlutterActivity
 import androidx.core.net.toUri
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
+
+private fun LoadFiles.Companion.getAllFolders(string: String) {}
 
 class MainActivity : FlutterActivity() {
 
@@ -20,6 +23,16 @@ class MainActivity : FlutterActivity() {
             flutterEngine.dartExecutor.binaryMessenger,
             "file-deck-methodChannel"
         ).setMethodCallHandler { call, result ->
+
+            if (call.method == "getFolders") {
+                val folders = LoadFiles.getAllFolders("/storage/emulated/0/")
+
+                for (folder in folders) {
+                    Log.d("FOLDER", "Name : ${folder.name} Path : ${folder.absolutePath}")
+                    print("${folder.name} Path : ${folder.absolutePath}")
+                }
+
+            }
 
         }
     }
