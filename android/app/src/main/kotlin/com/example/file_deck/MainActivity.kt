@@ -13,7 +13,6 @@ import androidx.core.net.toUri
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 
-private fun LoadFiles.Companion.getAllFolders(string: String) {}
 
 class MainActivity : FlutterActivity() {
 
@@ -23,16 +22,58 @@ class MainActivity : FlutterActivity() {
             flutterEngine.dartExecutor.binaryMessenger,
             "file-deck-methodChannel"
         ).setMethodCallHandler { call, result ->
-
             if (call.method == "getFolders") {
+
                 val folders = LoadFiles.getAllFolders("/storage/emulated/0/")
 
-                for (folder in folders) {
-                    Log.d("FOLDER", "Name : ${folder.name} Path : ${folder.absolutePath}")
-                    print("${folder.name} Path : ${folder.absolutePath}")
-                }
+//                val folders = mutableListOf<Map<String, Any>>(
+//
+//                    mapOf<String, Any>(
+//                        "name" to "name1",
+////                        "size" to folderSize(folder).toDouble(),
+//                        "freeSpace" to 2.5,
+//                        "path" to "path",
+//                        "isHidden" to true,
+//                        "parentFile" to "parentFile",
+//                    ),
+//                    mapOf<String, Any>(
+//                        "name" to "name2",
+////                        "size" to folderSize(folder).toDouble(),
+//                        "freeSpace" to 2.5,
+//                        "path" to "path3",
+//                        "isHidden" to true,
+//                        "parentFile" to "parentFile",
+//                    ),
+//                    mapOf<String, Any>(
+//                        "name" to "name4",
+////                        "size" to folderSize(folder).toDouble(),
+//                        "freeSpace" to 2.5,
+//                        "path" to "path",
+//                        "isHidden" to true,
+//                        "parentFile" to "parentFile",
+//                    ),
+//                    mapOf<String, Any>(
+//                        "name" to "name5",
+////                        "size" to folderSize(folder).toDouble(),
+//                        "freeSpace" to 2.5,
+//                        "path" to "path",
+//                        "isHidden" to true,
+//                        "parentFile" to "parentFile",
+//                    ),
+//                    mapOf<String, Any>(
+//                        "name" to "name6",
+////                        "size" to folderSize(folder).toDouble(),
+//                        "freeSpace" to 2.5,
+//                        "path" to "path",
+//                        "isHidden" to true,
+//                        "parentFile" to "parentFile",
+//                    ),
 
-            }
+
+                result.success(folders)
+            } else {
+                result.notImplemented()
+            }   
 
         }
     }
@@ -46,7 +87,6 @@ class MainActivity : FlutterActivity() {
         super.onResume()
         requestPermission(context)
     }
-
 
 
     private fun requestPermission(context: Context) {
